@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="he">
+
+    <%- include('static/head')%>
+    <%- include('static/navBar')%>
+    <div class="container-md">
+    <h5><b><%=user.firstName%></b> כיף שחזרת! </h5>
+    </div>
+    <div class="mx-auto"> <h5><b>מסכי הניהול של המשתמשים</b></h5></div>
+        <% for(let data of datas) {%>
+            <div class="container-md">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card user-card">
+                            <div class="card-block">
+                                <h6 class="f-w-600 m-t-25 m-b-10"><%- data.idOfUser.firstName %> <%- data.idOfUser.lastName %></h6>
+                                <p class="text-muted"><%- data.idOfUser.email %></p>
+                                <hr>
+                                <a class="btn btn-warning"href="/manager/<%=data._id %>"> לצפיה במסך הניהול של המשתמש </a>
+                                <hr>
+                            </div>
+                        </div>
+                    </div>  
+                </div>
+            </div>
+            <% } %>
+
+</body>
+</html>

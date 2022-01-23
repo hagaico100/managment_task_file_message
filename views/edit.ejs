@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="he">
+
+    <%- include('static/head')%>
+    <%- include('static/navBar')%>
+
+    <main class="container mt-5">
+        
+    <h1 class="text-center">עריכת פרטי משתמש</h1>          
+
+    <form action="/users/<%=datas._id%>?_method=PUT" method="POST" class="validated-form" novalidate>
+        <div class="mb-3">
+            <label class="form-label" for="firstName">שם פרטי</label>
+            <input class="form-control" type="text" id="firstName" name="firstName" value= "<%=datas.firstName%>" required>
+         
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="lastName">שם משפחה</label>
+            <input class="form-control" type="text" id="lastName" name="lastName" value= "<%=datas.lastName%>" required>
+           
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="email">אימייל</label>
+            <input class="form-control" type="email" id="email" name="email" value= "<%=datas.email%>" required>
+          
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="phone">טלפון</label>
+            <input class="form-control" type="text" id="phone" name="phone" value="<%-datas.phone%>" required>
+           
+        </div>
+                <div class="mb-3">
+            <label class="form-label" for="role">תפקיד</label><br>
+            <%if(datas.role=="מנהל"){%>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="role" id="admin" value="מנהל" checked>
+                <label class="form-check-label" for="admin">מנהל</label>
+              </div>
+              <%} else if(datas.role=="עובד"){%>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="role" id="employee" value="עובד" checked>
+                <label class="form-check-label" for="employee">עובד</label>
+              </div>
+              <%} else if(datas.role=="לקוח"){%>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="role" id="client" value="לקוח" checked>
+                <label class="form-check-label" for="client">לקוח</label>
+              </div>
+              <%}%>
+
+        </div>
+        <% if(role!="לקוח"){ %>
+            <%if(datas.role!="מנהל" && datas.role!="עובד"){%>
+
+                <div class="mb-3">
+                    <label class="form-label" for="nameOfComp">שם החברה</label>
+                    <input class="form-control" type="text" id="nameOfComp" name="nameOfComp"value="<%=datas.nameOfComp%>"  required>
+            
+                </div>
+        
+                <div class="mb-3">
+                    <label class="form-label" for="numOfComp">מספר עוסק</label>
+                    <input class="form-control" type="text" id="numOfComp" name="numOfComp" value="<%-datas.numOfComp%>" required>
+                   
+                </div>
+        
+        <div class="mb-3">
+            <label class="form-check-label" for="work">עובד המטפל בלקוח</label><br>
+            <input class="form-check-input" type="checkbox" name="work" value="-">
+            <label class="form-check-label" for="work">ללא עובד מטפל</label><br>
+        <% for(let employees of allEmployee){ %>
+            <input class="form-check-input" type="checkbox" id="<%=employees._id%>" name="work" value="<%=employees._id%>">
+            <label class="form-check-label" for="work"> <%=employees.firstName %> <%=employees.lastName %></label><br>
+            <% } %>
+            <% } %>
+
+        </div>
+        <% } %>
+        <button class="btn btn-success">עדכן כעת</button>
+        <% if(role!="לקוח"){ %>
+        <a href="/users" class="btn btn-success">חזרה לכל המשתמשים</a>
+        <% } %>
+    </form>
+</main> 
+</body>
+</html>

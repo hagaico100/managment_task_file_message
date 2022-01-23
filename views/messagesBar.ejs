@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="he">
+
+    <%- include('static/head')%>
+    <%- include('static/navBar')%>
+
+    <main class="container mt-5">
+        
+    <h1 class="text-center"><%= link %> </h1>          
+
+    <form action="/<%=to%>" method="POST" class="validated-form" novalidate>
+<% if (myclient!="-") { %>
+        <label for="idclient">בחר לקוח:</label>   
+        <select name="clientid">   
+            <% for( let clients of myclient ) { %>
+            <option value="<%=clients._id%>"><%=clients.firstName %> <%=clients.lastName %></option>
+            <% } %>    
+        </select>   
+        <% } %>
+       
+        <div class="mb-3">
+
+                <label class="form-label" for="message">נושא</label>
+                <input class="form-control" type="text" id="subToWork" name="sub" required>
+                <label class="form-label" for="message">תוכן ההודעה</label>
+                <input class="form-control" type="text" id="<%=link%>" name="message" required>
+                <input class="form-control" type="hidden"  name="send" value="<%=isLogin%>" required>
+
+            </div>
+        <button class="btn btn-success"><%=link%></button> <br>
+        
+        <div class="d-grid mx-auto">
+        <a href="/" class="btnIcon fa fa-reply"></a>
+        </div>
+    </form>
+
+
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="he">
+
+    <%- include('static/head')%>
+    <%- include('static/navBar')%>
+
+    <main class="container mt-5">
+        
+    <h1 class="text-center">הרשמה</h1>          
+
+    <form action="/users/registar" method="POST" class="validated-form" novalidate>
+        <div class="mb-3">
+            <label class="form-label" for="firstName">שם פרטי</label>
+            <input class="form-control" type="text" id="firstName" name="firstName" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="lastName">שם משפחה</label>
+            <input class="form-control" type="text" id="lastName" name="lastName" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="email">אימייל</label>
+            <input class="form-control" type="email" id="email" name="email" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="password">סיסמא</label>
+            <input class="form-control" type="password" id="password" name="password" required>
+         </div>
+        <div class="mb-3">
+            <label class="form-label" for="phone">טלפון</label>
+            <input class="form-control" type="text" id="phone" name="phone" required>
+         </div>
+         <div class="mb-3">
+            <label class="form-label" for="role">תפקיד</label><br>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="role" id="inlineRadio3" value="לקוח">
+                <label class="form-check-label" for="client" checked>לקוח</label>
+              </div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="nameOfComp">שם החברה</label>
+            <input class="form-control" type="text" id="nameOfComp" name="nameOfComp" required>
+ 
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="numOfComp">מספר עוסק</label>
+            <input class="form-control" type="text" id="numOfComp" name="numOfComp" required>
+        </div>
+        
+
+        <div class="mb-3">
+            <label class="form-check-label" for="work">עובד המטפל בלקוח</label><br>
+        <% for(let employees of allEmployee){ %>
+            <input class="form-check-input" type="checkbox" id="<%=employees._id%>" name="work" value="<%=employees._id%>">
+            <label class="form-check-label" for="work"> <%=employees.firstName %> <%=employees.lastName %></label><br>
+            <% } %>
+        </div>
+
+        <button class="btn btn-success">הרשמה</button>
+    </form>
+</main> 
+</body>
+</html>

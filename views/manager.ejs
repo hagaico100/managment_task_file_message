@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="he">
+
+    <%- include('static/head')%>
+    <%- include('static/navBar')%>
+    
+       <% if (message=="message") { %>
+        <div class="mx-auto"><b>מסך ההודעות של <%=datas.idOfUser.firstName %> <%=datas.idOfUser.lastName %> </b></div>
+ <div class="mx-5">  
+
+        <h4>הודעות כלליות</h4>
+        <div class="list-group"> 
+            <ul> 
+                <% if (datas.messages.length) { %>
+            <% for(let messages of datas.messages) {%>
+                <li data-bs-toggle="collapse" data-bs-target="#demo<%= messages._id%>" class="list-group-item list-group-item-action"  ><b><%=messages.send.firstName%> <%=messages.send.lastName%>:</b>  <%if(messages.sub!="undefined"){%> <%=messages.sub%><%}%></li>
+                <div id="demo<%= messages._id%>" class="collapse">
+                    <li class="list-group-item list-group-item-action list-group-item-secondary" ><b><%=messages.send.firstName%> <%=messages.send.lastName%>:</b>
+                        <span style="float: left;">
+                            <a href="/manager/<%=messages._id%>/edit" class="btnIcon fa fa-pencil-square-o"></a>
+
+                            <form style='display:inline;' action="/messages/<%=messages._id%>/del?_method=DELETE" method="POST">
+                                <input class="form-control" type="hidden"  name="idOfClient" value="<%=datas._id%>" required>
+                                <input class="form-control" type="hidden"  name="messageTo" value="m" required>
+                                <button type="submit" class="btnIcon fa fa-trash" onclick= "return confirm('אתה בטוח שאתה רוצה למחוק את ההודעה הזו?')")> מחיקת הודעה </button>
+                                </form>    
+                            
+                        </span>    
+        
+                        <br> <i> נושא ההודעה: <%=messages.sub%> </i><br>   <%=messages.message%>
+                    <% if (messages.date) { %>
+                        <span style="float: left;"> <%=messages.date%> </span>
+                        <%}%>
+                
+                </li>         
+
+                    </div>
+
+                </li>         
+
+
+                    <% } %>
+                <%}else{%>
+                <li class="list-group-item list-group-item-action" >אין הודעות עדיין</li>
+                <% } %>
+
+        </ul>
+   
+        </div>  
+</div>
+   
+ <div class="mx-5">  
+
+        <h4>הודעות אישיות</h4>
+        <div class="list-group"> 
+            <ul>
+                <% if (datas.personalMessages.length>0) { %>
+ 
+            <% for(let messages of datas.personalMessages) {%>
+                <li data-bs-toggle="collapse" data-bs-target="#demo<%= messages._id%>" class="list-group-item list-group-item-action" ><b><%=messages.send.firstName%> <%=messages.send.lastName%>:</b>  <%if(messages.sub!="undefined"){%> <%=messages.sub%><%}%></li>
+                    <div id="demo<%= messages._id%>" class="collapse">
+                    <li class="list-group-item list-group-item-action list-group-item-secondary" ><b><%=messages.send.firstName%> <%=messages.send.lastName%>:</b>
+                        <span style="float: left;">
+                            <a href="/manager/<%=messages._id%>/editP" class="btnIcon fa fa-pencil-square-o"></a>
+                            
+                            <form style='display:inline;' action="/messages/<%=messages._id%>/delP?_method=DELETE" method="POST">
+                                <input class="form-control" type="hidden"  name="idOfClient" value="<%=datas._id%>" required>
+                                <input class="form-control" type="hidden"  name="messageTo" value="p" required>
+                                <button type="submit" class="btnIcon fa fa-trash" onclick= "return confirm('אתה בטוח שאתה רוצה למחוק את ההודעה הזו?')")></button>
+                                </form>    
+                        </span>    
+        
+                        <br> <i> נושא ההודעה: <%=messages.sub%> </i><br>   <%=messages.message%>
+                    <% if (messages.date) { %>
+                        <span style="float: left;"> <%=messages.date%> </span>
+                        <%}%>
+                
+                </li>         
+
+                    </div>
+
+                </li>         
+
+                        <% } %>
+                        <%}else{%>
+                            <li class="list-group-item list-group-item-action" >אין הודעות עדיין</li>
+                            <% } %>
+            </ul>
+
+
+            <% if ( work!="-") { %>
+            <div class="mx-5" style="max-width: 50%;">
+                <form action="/<%=to%>" method="POST" class="validated-form" novalidate>
+                    <h4>שליחת הודעה לעובד האחראי</h4>
+                    <label class="form-label" for="message">נושא</label>
+                    <input class="form-control" placeholder="שדה זה הוא שדה חובה" type="text" id="subToWork" name="sub" required>
+                    <label class="form-label" for="message">תוכן ההודעה</label>
+                    <input class="form-control" type="text" placeholder="שדה זה הוא שדה חובה" id="messageToWork" name="message" required>
+                    <input class="form-control" type="hidden"  name="send" value="<%=isLogin%>" required>
+                    <input class="form-control" type="hidden"  name="clientid" value="<%=work%>" required>
+                    <button class="btn btn-success"> שלח הודעה </button>
+                </div>
+        </form>
+        <%}%>
+    </div>       
+
+</div> 
+
+
+<!--
+    this is the system of user:
+-->
+        <% }else{ %>
+        <p>כיף שחזרת <b><%=user.firstName%>!</b></p>
+        <div class="mx-auto"><b>מסך ההודעות והמשימות של <%=datas.idOfUser.firstName %> <%=datas.idOfUser.lastName %> </b></div>
+
+        <!--
+        <p>documents: <b><%=datas.numOfDocument %></b></p>
+        <p>documentsRequired:<b><%=datas.numOfDocumentRequired %> </b></p>  
+        -->
+        
+        <!-- תחילת בקשת מסמכים-->
+        
+        <div class="mx-5">    
+            <div class="card">
+                <h5 class="card-header"> משימות הדורשות טיפול </h5>
+                <%if(datas.documents[datas.documents.length-1]!=undefined){%>
+                <div class="list-group"> 
+                    <ul>
+                            <% for(let doc of datas.documents) {%> 
+                                <% if(doc.done=="0"){ %>
+                                    <li data-bs-toggle="collapse" data-bs-target="#demo<%= doc._id%>" class="list-group-item list-group-item-action list-group-item-danger" >
+                                        <span style="float: left;">תאריך אחרון לביצוע: <%=doc.expiryDate%></span>
+                                    <b><%=doc.documentRequired%>:</b></li>
+                                    <% } %> 
+                                    
+                                    <div id="demo<%= doc._id%>" class="collapse">
+                                        <% if (doc.done=="0") { %>
+                                        <li class="list-group-item list-group-item-action list-group-item-light">
+                                        <b><%=doc.documentRequired%></b>             
+                                            <span style="float: left;">תאריך אחרון לביצוע: <%=doc.expiryDate%></span>
+                                            <div>
+                                             <form action="/manager/docUp" method="POST" enctype="multipart/form-data">
+                                                 <label for="docUp">העלה כאן קובץ אם נדרש או לחץ על המשימה בוצעה</label>
+                                                 <input type="file" name="docUp" multiple>
+                                                 <input class="form-control" type="hidden"  name="statusD" value="0" required>
+                                                 <input class="form-control" type="hidden"  name="idOfData" value="<%=datas._id%>" required>
+                                                 <input class="form-control" type="hidden"  name="idOfDoc" value="<%=doc._id%>" required>
+                                                 <button type="submit">המשימה בוצעה</button>
+                                             </form>
+                                         </div>
+                                        </li>    
+                                        <% } %> 
+                                </div>
+
+                                        <% } %> 
+                                    </ul>
+                                </div>
+                                       
+        <!--  כאן היה סוגר שמחקתי כדי לבדוק אם זה מסתדר.  -->
+                                 
+            <h5 class="card-header"> משימות שכבר טופלו </h5>
+            <div class="list-group"> 
+                    <ul>
+                            <% for(let doc of datas.documents) {%> 
+
+                                <% if(doc.done=="1"){ %>
+                                <% if(doc.statusD=="1"){ %>  
+                    <!-- משימות שבוצעו על ידי הלקוח ונבדקו -->
+                        <li data-bs-toggle="collapse" data-bs-target="#demo<%= doc._id%>" class="list-group-item list-group-item-action list-group-item-success" >
+                            <b><%=doc.documentRequired%>:</b></li>
+                            
+                            <div id="demo<%= doc._id%>" class="collapse">
+                                <li class="list-group-item list-group-item-action list-group-item-light">
+                                <b><%=doc.documentRequired%></b>   
+                            <span style="float: left;"><b> המשימה הושלמה ואושרה על ידי העובד</b></span>
+                            <%if(doc.document.length){%>
+                                <% for(let imgs of doc.document) {%>
+                               <a href="<%-imgs.documentPath%>" target="_blank"><img style="height: 400px; display: block;margin-left: auto; margin-right: auto; width:50%" src="<%-imgs.documentPath%>" alt="doc of user"></a>
+                               <% } %>
+                                 <% } %> 
+                                </li>
+                                </div>                           
+                            
+                            <!-- משימות שבוצעו על ידי הלקוח אך לא נבדקו -->
+                            <% }else{ %> 
+                                <li data-bs-toggle="collapse" data-bs-target="#demo<%= doc._id%>" class="list-group-item list-group-item-action list-group-item-warning" >
+                                    <b><%=doc.documentRequired%>:</b></li>
+
+
+                                    <div id="demo<%= doc._id%>" class="collapse">
+                                        <li class="list-group-item list-group-item-action list-group-item-light">
+                                        <b><%=doc.documentRequired%></b>                                  
+                                    
+                                        <span style="float: left;"><b>המשימה הושלמה</b></span>
+                                   <br>
+                                <%if(role=="מנהל"||role=="עובד"){%>
+                                    <span style="float: left;">
+
+                                    <div>
+                                        <form action="/manager/docUp" method="POST" enctype="multipart/form-data">
+                                        <input class="form-control" type="hidden"  name="statusD" value="1" required>
+                                        <input class="form-control" type="hidden"  name="idOfData" value="<%=datas._id%>" required>
+                                        <input class="form-control" type="hidden"  name="idOfDoc" value="<%=doc._id%>" required>
+                                        <button type="submit">המשימה תקינה</button>
+                                        </form>
+                                    </div>
+                                 </span>
+                                <% } %> 
+                                           <br>
+                                           <%if(doc.document.length){%>
+                                           <% for(let imgs of doc.document) {%>
+                                            <a href="<%-imgs.documentPath%>" target="_blank"><img style="height: 400px; display: block;margin-left: auto; margin-right: auto; width:50%" src="<%-imgs.documentPath%>" alt="doc of user"></a>
+                                            <% } %>  
+                                            <% } %> 
+                                        </li> 
+                                    </div>
+                                        
+                                    <% } %> 
+                                    <% } %> 
+       
+                                
+                                <% } %> 
+
+                            </ul>
+                        </div>
+                                        <%}else{%>
+                                        <p class="card-text">אין משימות עבורך</p>
+                                    <%}%>
+             </div>
+                  </div>
+                     <br>
+                   
+                   
+                     <div class="d-block w-100">
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-striped" id="vpro" role="progressbar" style="width:100%;" aria-valuenow="<%=vpro%>" aria-valuemin="0" aria-valuemax="<%=datas.numOfDocumentRequired%>">ביצעת <%=datas.numOfDocument%> משימות מתוך <%=datas.numOfDocumentRequired%></div>
+                    </div>  
+                    </div>
+                    
+                    <br>
+                <%if(role=="מנהל"||role=="עובד"){%>
+
+                    <div class="d-grid gap-2 col-6 mx-auto">
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                    הוספת משימה חדשה
+                    </button>
+                    </div>
+                    
+                    <!-- Modal -->
+                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                    
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h5 class="modal-title" id="staticBackdropLabel">הוספת בקשה חדשה</h5>
+                    
+                    </div>
+                    
+                    <form action="/manager/doc" method="POST" class="validated-form" novalidate>
+                        <label for="idclient">בחר לקוח:</label>   
+                    <select name="clientid">   
+                    <% for( let clients of allClient ) { %>
+                    <option value="<%=clients._id%>"><%=clients.firstName %> <%=clients.lastName %></option>
+                    <% } %>    
+                    </select>   <br>
+                            <label class="form-label" for="doc">תוכן הבקשה:</label>
+                            <input class="form-control" type="text" id="doc" name="docRec" required>
+                            <label class="form-label" for="date">תאריך יעד:</label>
+                            <input class="form-control" type="date" min= '<%=min%>' id="dateExp" name="dateExp">
+                            <div class="modal-footer">
+                            <button type="submit" class="btn btn-success">שלח</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ביטול</button>
+                        </div>
+                    
+                    </form>
+                    </div>
+                    </div>
+                 </div>
+     
+            <!-- סוף המסמכים-->
+    <% } %><!-- close if of admin or employ for doc-->
+      
+    <br>
+    <div class="mx-5">    
+
+        <div class="card">
+        <h5 class="card-header">הודעות כלליות</h5>
+        <div class="card-body">
+            <%if(datas.messages[datas.messages.length-1]!=undefined){%>
+        
+                <p class="card-text"><b>הודעה מ<%=datas.messages[datas.messages.length-1].send.firstName%>:</b> <%= datas.messages[datas.messages.length-1].message%> <span class="badge bg-danger rounded-pill"><%=datas.newMessage%></span></p>
+        <a href="/messages/<%=datas._id%>" class="btn btn-primary"> <%=datas.messages.length%> הודעות נוספות</a>
+        <%}else{%>
+        <p class="card-text">אין הודעות חדשות</p>
+        <%}%>
+    </div>
+        </div>
+        </div>
+
+        <div class="mx-5">    
+        <div class="card">
+            <h5 class="card-header">הודעות פרטיות</h5>
+            <div class="card-body">
+        <%if(datas.personalMessages[datas.personalMessages.length-1]!=undefined){%>
+            <p class="card-text"><b>הודעה מ<%=datas.personalMessages[datas.personalMessages.length-1].send.firstName%>:</b> <%=datas.personalMessages[datas.personalMessages.length-1].message%></b> <span class="badge bg-danger rounded-pill"><%=datas.newMessageP%></span> </p>
+            <a href="/messages/<%=datas._id%>" class="btn btn-primary"> <%=datas.personalMessages.length%> הודעות נוספות</a>
+            <% }else{ %>
+        <p class="card-text">אין הודעות חדשות</p>
+        <%}%>    
+        </div>
+            </div> 
+            </div>
+
+<% } %>
+  
+    </div>
+    <br>
+
+    <%if(isLogin==datas._id||role=="מנהל"||role=="עובד"){%>
+<div class="d-grid mx-auto">
+        <a href="/" class="btnIcon fa fa-reply"></a>  <br><br>
+    </div>
+        <% } %>
+    
+</body>
+</html>

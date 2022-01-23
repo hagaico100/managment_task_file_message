@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="he">
+
+    <%- include('static/head')%>
+    <%- include('static/navBar')%>
+
+    <main class="container mt-5">
+        
+    <h1 class="text-center">עריכת תוכן הודעה</h1>          
+
+    <% if (Pmessage=="1") { %>
+
+    <form action="/messages/edit" method="POST" class="validated-form" novalidate>
+       
+        <div class="mb-3">
+
+            <% if (datas.personalMessages.length) { %>
+                <% for(let messages of datas.personalMessages) {%>
+                   <% if(messages._id== id){%>
+            <label class="form-label" for="messages">תוכן ההודעה</label>
+            <input class="form-control" type="text" id="submessages" placeholder="לא הוזן נושא בהודעה המקורית, תרצה להוסיף נושא כעת?" name="sub" value= "<%=messages.sub%>" >
+            <input class="form-control" type="text" id="messages" name="message" value= "<%=messages.message%>" >
+            <input class="form-control" type="hidden"  name="send" value="<%=isLogin%>" required>
+            <input class="form-control" type="hidden"  name="idOfMessage" value="<%=messages._id%>" required>
+            <input class="form-control" type="hidden"  name="idOfClient" value="<%=datas.idOfUser%>" required>
+            <input class="form-control" type="hidden"  name="forMe" value="pm" required>
+
+            <% } %>
+             
+            <% } %>
+            <% } %>
+            <% }else if(Pmessage=="-"){ %>
+                <form action="/messages/edit" method="POST" class="validated-form" novalidate>
+       
+                    <div class="mb-3">
+            
+                <% if (datas.messages.length) { %>
+                    <% for(let messages of datas.messages) {%>
+                       <% if(messages._id== id){%>
+                <label class="form-label" for="messages">תוכן ההודעה</label>
+                <input class="form-control" type="text" id="submessages" placeholder="לא הוזן נושא בהודעה המקורית, תרצה להוסיף נושא כעת?" name="sub" value= "<%=messages.sub%>" >
+                <input class="form-control" type="text" id="messages" name="message" value="<%=messages.message%>" >
+                <input class="form-control" type="hidden"  name="send" value="<%=isLogin%>" required>
+                <input class="form-control" type="hidden"  name="idOfMessage" value="<%=messages._id%>" required>
+                <input class="form-control" type="hidden"  name="idOfClient" value="<%=datas.idOfUser%>" required>
+                <input class="form-control" type="hidden"  name="forMe" value="m" required>
+                <% } %>
+                 
+                <% } %>
+                <% } %>
+                    
+                
+                <% } %>
+
+        </div>
+       
+        <button class="btn btn-success">עדכן תוכן הודעה</button>
+        <a href="/users" class="btn btn-success">כפתור חזרה - לא מוגדר עדיין</a>
+    </form>
+</main> 
+</body>
+</html>

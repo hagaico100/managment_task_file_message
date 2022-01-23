@@ -1,0 +1,165 @@
+
+
+<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+    <div class="collapse navbar-collapse mr-auto">
+    <%if (dataUser && role!="מנהל"&&role!="עובד"){%>
+      <div class="navbar-nav">
+        <a class="navbar-brand" href="/manager/<%=dataUser._id%> ">מסך הניהול שלי</a>
+        <a class="nav-link position-relative" href="/messages/<%=dataUser._id%>">
+            הודעות נוספות
+            <% if(dataUserReq.newMessageP>0||dataUserReq.newMessage>0){ %>
+              <span class="position-absolute top-0 start-0 translate-middle badge rounded-pill bg-danger">
+                  <%=(dataUserReq.newMessageP)+(dataUserReq.newMessage)%>
+                <span class="visually-hidden">unread messages</span>
+              </span>
+              <% } %> 
+        </a>
+      </div>
+    <%}else if(role=="מנהל"||role=="עובד"){%>
+        <a class="navbar-brand" href="/manager/<%=dataUser._id%> ">מסך הניהול שלי</a>
+        <% }else {%>
+        <a class="navbar-brand" href="/users/login">אתה לא מחובר</a> 
+        <% } %>
+    
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <% if(role=='מנהל'||role=='עובד'){ %>
+    <div class="navbar-nav">
+      <a class="nav-link" href="/">נתוני הלקוחות שלי</a> 
+      <a class="nav-link" href="/users">פרטי המשתמשים שלי <span class="sr-only">(current)</span></a>
+           
+           
+    <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+      <ul class="navbar-nav">
+        <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    שליחת הודעות
+                  </a>             
+        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+          <li class="nav-item dropdown">
+            <li><a class="dropdown-item" href="/messages/MessageToAllUsers">שליחת הודעה לכל המשתמשים</a></li>
+            <li><a class="dropdown-item" href="/messages/MessageToOneUser">שליחת הודעה אישית</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item position-relative" href="/messages/<%=dataUser._id%>">
+                הודעות נוספות   </a></li>
+          </li>
+        </ul>
+        <% if(dataUserReq.newMessageP>0||dataUserReq.newMessage>0){ %>
+
+          <span class="position-absolute top-0 start-0 translate-middle badge rounded-pill bg-danger">
+              <%=(dataUserReq.newMessageP)+(dataUserReq.newMessage)%>
+            <span class="visually-hidden">unread messages</span>
+          </span>
+          <% } %> 
+      </li> 
+         
+      </ul> 
+    </div>
+    </div>
+
+        <% } %>
+    </div>
+       
+<div class="navbar-nav ml-auto">
+  <% if(role=='מנהל'){ %>
+  <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+  <ul class="navbar-nav">
+    <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" 
+              role="button" data-bs-toggle="dropdown" aria-expanded="false"> שלום <%- emailUser %> </a> 
+        
+    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+      <li class="nav-item dropdown">
+        <li><a class="dropdown-item"href="/users/<%=user._id %>"> פרטים אישיים </a></li>
+        <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#staticBackdropPassword"> שינוי סיסמא </a></li>
+        <li><a class="dropdown-item" href="/users/reg"> הרשמה </a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item position-relative" href="/users/logout"> התנתק </a></li>
+      </li>
+    </ul>
+      </li>  
+  </ul> 
+</div>
+<% }else if (!isLogin) { %>
+  <a class="nav-link" href="/users/login">התחבר</a>
+
+<% }else { %>
+  <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+    <ul class="navbar-nav">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" 
+        role="button" data-bs-toggle="dropdown" aria-expanded="false"> שלום <%- emailUser %> </a>             
+      <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+        <li class="nav-item dropdown">
+          <li><a class="dropdown-item"href="/users/<%=user._id %>"> פרטים אישיים </a></li>
+          <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#staticBackdropPassword"> שינוי סיסמא </a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item position-relative" href="/users/logout"> התנתק </a></li>
+        </li>
+      </ul>
+        </li>  
+    </ul> 
+  </div>
+<% } %>
+
+</div>
+
+</nav>
+
+
+  
+
+
+    <body lang="he" dir="rtl" class="d-flex flex-column vh-100">
+     
+      <%if(dataUserReq!=null){%>
+        <% if(dataUserReq.req==0 && dataUserReq.numOfDocumentRequired>0){ %> 
+          <div class="alertDoc">
+            <span class="closebtnDoc" onclick="this.parentElement.style.display='none';">&times;</span>
+          יש לך משימות שדורשות טיפול, תיכנס בבקשה למסך הניהול שלך ותטפל בהם
+          </div>
+          <% } %> 
+          <% } %> 
+  
+          <%if(wellcome && wellcome.length){%>
+        <div class="alert alert-success" role="alert"><%-wellcome%> </div>
+        <%}%>       
+    <%if(success && success.length){%>
+        <div class="alert alert-success" role="alert"><%-success%> </div>
+        <%}%>
+    <%if(erorr&& erorr.length){%>
+        <div class="alert alert-danger" role="alert"><%- erorr%> </div>        
+        <%}%> 
+
+
+
+      <!-- Modal -->
+      <div class="modal fade" id="staticBackdropPassword" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+                
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <h5 class="modal-title" id="staticBackdropLabel">שינוי סיסמא</h5>
+            
+            </div>
+              
+                <form action="/users/newPassword" method="POST" class="validated-form" novalidate>
+                    <label class="form-label" for="newPass">הכנס כאן סיסמא חדשה:</label>
+                        <input class="form-control" type="text" id="newPass" name="newPass" required>
+                        <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">החלף סיסמא</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ביטול</button>
+                    </div>
+    
+                </form>
+          </div>
+        </div>
+      </div>
+     
+    </div>
+
+

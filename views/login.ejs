@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="he">
+
+    <%- include('static/head')%>
+    <%- include('static/navBar')%>
+    <%- include('static/loginF')%>
+
+
+        <br>
+        <br>
+        <br>
+        
+        <main class="container mt-5">
+        <div class="login1">
+            <h1 class="text-center">התחברות</h1>
+    
+        <form action="/users/login" method="POST" class="validated-form" novalidate>
+            <div class="mb-3">
+                <label class="form-label" for="email">אימייל</label>
+                <input class="form-control" type="email" id="email" name="email" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="password">סיסמא</label>
+                <input class="form-control" type="password" id="password" name="password" required>
+            </div>
+            <button class="btn btn-success">התחבר</button>
+            <a href="/users/forgetPassword" class="btn btn-success">שכחתי סיסמא</a>
+        </div>
+            <br><br><br>
+               
+        </form>
+             
+    </main> 
+
+</body>
+
+</html>

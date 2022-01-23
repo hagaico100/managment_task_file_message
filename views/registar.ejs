@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="he">
+
+    <%- include('static/head')%>
+    <%- include('static/navBar')%>
+
+    <main class="container mt-5">
+        
+    <h1 class="text-center">הרשמת עובדים ומנהלים</h1>          
+
+    <form action="/users/registar" method="POST" class="validated-form" novalidate>
+        <div class="mb-3">
+            <label class="form-label" for="firstName">שם פרטי</label>
+            <input class="form-control" type="text" id="firstName" name="firstName" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="lastName">שם משפחה</label>
+            <input class="form-control" type="text" id="lastName" name="lastName" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="email">אימייל</label>
+            <input class="form-control" type="email" id="email" name="email" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="password">סיסמא</label>
+            <input class="form-control" type="password" id="password" name="password" required>
+         </div>
+        <div class="mb-3">
+            <label class="form-label" for="phone">טלפון</label>
+            <input class="form-control" type="text" id="phone" name="phone" required>
+         </div>
+         <div class="mb-3">
+            <label class="form-label" for="role">תפקיד</label><br>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="role" id="inlineRadio1" value="מנהל">
+                <label class="form-check-label" for="admin">מנהל</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="role" id="inlineRadio2" value="עובד">
+                <label class="form-check-label" for="employee">עובד</label>
+              </div>
+        </div>
+        <div class="invisible">
+            <input type="radio" id="nameOfComp" name="nameOfComp" value="-" checked required>
+            <input type="radio" id="numOfComp" name="numOfComp" value="-" checked required>
+            <input type="radio" name="work" value="-" checked>
+            </div>
+        <button class="btn btn-success">הרשמה</button>
+    </form>
+</main> 
+</body>
+</html>
